@@ -50,12 +50,12 @@ class SettingsViewController: UIViewController {
             }
         }
         if sender.tag == 1 {
-            if self.defaults.double(forKey: "MaxTipPercent") < self.defaults.double(forKey: "MinTipPercent"){
+            if self.defaults.double(forKey: "MaxTipPercent") <= self.defaults.double(forKey: "MinTipPercent"){
                 self.defaults.set(self.defaults.double(forKey: "DefaultTipPercent"), forKey: "MinTipPercent")
                 self.defaults.set(self.defaults.double(forKey: "DefaultTipPercent"), forKey: "MaxTipPercent")
             }
-            if self.defaults.double(forKey: "DefaultTipPercent") < self.defaults.double(forKey: "MinTipPercent"){
-                self.defaults.set(self.defaults.double(forKey: "DefaultTipPercent"), forKey: "MinTipPercent")
+            if (self.defaults.double(forKey: "DefaultTipPercent") < self.defaults.double(forKey: "MinTipPercent")) && (self.defaults.double(forKey: "MinTipPercent") <= self.defaults.double(forKey: "MaxTipPercent")){
+                self.defaults.set(self.defaults.double(forKey: "MinTipPercent"), forKey: "DefaultTipPercent")
             }
         }
         if sender.tag == 2  {
@@ -74,8 +74,10 @@ class SettingsViewController: UIViewController {
                     self.defaults.set(1, forKey: "MinTipPercent")
                 }
             }
+            if self.defaults.double(forKey: "DefaultTipPercent") <= self.defaults.double(forKey: "MinTipPercent"){
+                self.defaults.set(self.defaults.double(forKey: "MinTipPercent"), forKey: "DefaultTipPercent")
+            }
         }
-        
     }
     
     override func didReceiveMemoryWarning() {
